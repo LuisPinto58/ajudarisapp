@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body style="padding-top: 80px; padding-bottom: 48px;" onload="getMessage()">
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="https://ajudaris.org">
+            <img src="assets/Ajudaris.png" width="52" class="d-inline-block align-top" alt="ajudaris">
+            <span class="school">Home</span>
+        </a>
+    </nav>
+
+    <nav class="navbar navbar-light bg-light fixed-top"
+        style="margin-top: 68px; height: 52px; background-color: #88AA31 !important;">
+        <span class="navbar-brand mb-0 h1 school" style="color: white;">Histórias da ajudaris</span>
+    </nav>
+
+    <div class="container" style="margin-left: 0px;margin-right: 0px;">
+        <div class="row">
+            <!-- side navbar-->
+            <div class="col-3 desktop">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light "
+                    style="width: 280px;height: 80vh;  margin-top: 32px; position: fixed;">
+                    <a href="/"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <img src="assets/person.svg" height="40px" alt="user">
+                        <span class="fs-6" id="sidebarEmail"></span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="adminHome.html" class="nav-link  active" aria-current="page">
+                                <img src="assets/house.svg" alt="home">
+                                Boas vindas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="adminSubmissions.html" class="nav-link link-dark">
+                                <img src="assets/shield.svg" alt="admin">
+                                Administração
+                            </a>
+                        </li>
+                        <li>
+                            <a href="adminUsers.html" class="nav-link link-dark">
+                                <img src="assets/person.svg" alt="users">
+                                Utilizadores
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav nav-pills flex-column mt-auto text-center">
+                        <li class="nav-item" style=" border: solid 2px red;border-radius: 8px;">
+                            <a id="logOut"  class="nav-link link-dark" style="background-color: white;">
+                                <span>Terminar sessão</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
+            <div class="col-2 desktop"></div>
+
+            <div class="col d-flex flex-column  align-items-center text-center"
+                style="margin-top: 48px; margin-bottom: 60px;">
+                <div style="margin-bottom: 32px;">
+                    <h2 class="school">Bem vindo!</h1>
+                        <img src="assets/Ajudaris.png" alt="Ajudaris" width="168px">
+                        <div id="message">
+                        </div>
+                        <p id="submissionDate"></p>
+                </div>
+
+                <button type="button" class="btn btn-outline-light d-inline-block"
+                    style="background-color: #176131;width: 60%;" data-bs-toggle="modal"
+                    data-bs-target="#editModal">Editar texto e datas</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit  Modal-->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModallabel" aria-hidden="true">
+        <form id="editForm">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header" style="height: 30px;">
+                        <button type="button" class="btn-close modalCloser" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-header" style="justify-content: center;">
+                        <h1 class="modal-title fs-5" id="editModallabel">Editar informação</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Mensagem" id="editTextarea"
+                                style="height: 400px;" required></textarea>
+                            <label for="editTextarea">Mensagem</label>
+                        </div>
+
+                        <br>
+
+                        <label for="editEndSignDate" class="form-label">Data Limite de Inscrição</label>
+                        <input type="date" class="form-control" id="editEndSignDate" required>
+
+                        <label for="editEndSubmissionDate" class="form-label">Data Limite de Submissão</label>
+                        <input type="date" class="form-control" id="editEndSubmissionDate" required>
+
+                        <label for="editYear" class="form-label" style="margin-top: 16px;">Ano:</label>
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <button type="button" class="btn btn-outline-light d-inline-block"
+                                style="background-color: #176131;color:white; margin-right: 8px; width: auto;"
+                                onclick="changeYear('subtract')">-</button>
+                            <input type="number" class="form-control" id="editYear" required readonly>
+
+                            <button type="button" class="btn btn-outline-light d-inline-block"
+                                style="background-color: #176131;color:white; margin-left: 8px; width: auto;"
+                                onclick="changeYear('add')">+</button>
+                    </div>
+
+
+                    <label for="editIllustratorCode" class="form-label">Código Ilustrador</label>
+                    <input type="text" class="form-control" id="editIllustratorCode" required>
+
+                    <label for="editJuryCode" class="form-label">Código Jurí</label>
+                    <input type="text" class="form-control" id="editJuryCode" required>
+
+                    <label for="editDesignerCode" class="form-label">Código Designer</label>
+                    <input type="text" class="form-control" id="editDesignerCode" required>
+
+                    <label for="editRevisorCode" class="form-label">Código Revisor</label>
+                    <input type="text" class="form-control" id="editRevisorCode" required>
+
+
+                </div>
+                <div class="modal-footer" style="justify-content: space-around;">
+                    <button type="button" class="btn btn-success" onclick="editAjudaris()">Editar informação</button>
+                </div>
+            </div>
+    </div>
+    </form>
+    </div>
+
+
+
+
+
+
+    <!-- Bottom navbar-->
+    <nav class="navbar fixed-bottom bg-body-tertiary bottomNav mobile">
+        <div class="container-fluid justify-content-evenly text-center">
+            <a href="adminHome.html" class="active d-flex flex-column align-items-center"
+                style="text-decoration: none; width:30%">
+                <img src="assets/house.svg" alt="home" height="32px">
+                <span class="bottom-bar-text current">Inicio</span>
+            </a>
+
+            <a href="adminSubmissions.html" class="d-flex flex-column align-items-center"
+                style="text-decoration: none; width:30%">
+                <img src="assets/shield.svg" alt="admin" height="32px">
+                <span class="bottom-bar-text">Administração</span>
+            </a>
+
+            <a href="adminUsers.html" class="d-flex flex-column align-items-center"
+                style="text-decoration: none; width:30%">
+                <img src="assets/person.svg" alt="users" height="32px">
+                <span class="bottom-bar-text ">Utilizadores</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <script src="adminHome.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body style="padding-top: 80px; padding-bottom: 50px;" id="body">
+  <nav class="navbar navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="https://ajudaris.org">
+      <img src="assets/Ajudaris.png" width="52" class="d-inline-block align-top" alt="ajudaris">
+      <span class="school">Home</span>
+    </a>
+  </nav>
+
+  <nav class="navbar navbar-light bg-light fixed-top"
+    style="margin-top: 68px; height: 52px; background-color: #88AA31 !important;">
+    <span class="navbar-brand mb-0 h1 school" style="color: white;">Histórias da ajudaris</span>
+  </nav>
+
+
+
+
+
+  <div class="container" style="margin-left: 0px;margin-right: 0px;">
+    <div class="row">
+      <!-- side navbar-->
+      <div class="col-3 desktop">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light"
+          style="width: 280px;height: 80vh;  margin-top: 32px; position: fixed;">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img src="assets/person.svg" height="40px" alt="user">
+            <span class="fs-6" id="sidebarEmail"></span>
+          </a>
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              <a href="adminHome.html" class="nav-link  link-dark" aria-current="page">
+                <img src="assets/house.svg" alt="home">
+                Boas vindas
+              </a>
+            </li>
+            <li>
+              <a href="adminSubmissions.html" class="nav-link active">
+                <img src="assets/shield.svg" alt="admin">
+                Administração
+              </a>
+            </li>
+            <li>
+              <a href="adminUsers.html" class="nav-link link-dark">
+                <img src="assets/person.svg" alt="users">
+                Utilizadores
+              </a>
+            </li>
+
+          </ul>
+
+          <ul class="nav nav-pills flex-column mt-auto text-center">
+            <li class="nav-item" style=" border: solid 2px red;border-radius: 8px;">
+              <a id="logOut" class="nav-link link-dark" style="background-color: white;">
+                <span>Terminar sessão</span>
+              </a>
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+
+      <div class="col-2 desktop"></div>
+
+      <div class="col d-flex flex-column  align-items-center text-center"
+        style="margin-top: 48px; margin-bottom: 60px;">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th>
+                  <select class="form-select" aria-label="Default select example"
+                    style="width: 100px;background-color: #212529;color: white;" id="writtingSelect"
+                    onchange="changeCategory(this.value, document.getElementById('locationSelect').value)">
+                    <option value="submission" selected>Todos</option>
+                    <option value="submitted">Submetidos</option>
+                    <option value="selected">Selecionados</option>
+                    <option value="illustrated">Com ilustração</option>
+                    <option value="nonIllustrated">Sem ilustração</option>
+                    <option value="rated">Com avaliação</option>
+                    <option value="unrated">Sem avaliação</option>
+                    <option value="marked">Marcados</option>
+                  </select>
+                </th>
+                <th>
+                  <select class="form-select" aria-label="Default select example"
+                    style="width: 100px;background-color: #212529;color: white;" id="locationSelect"
+                    onchange="changeCategory(document.getElementById('writtingSelect').value, this.value); console.log(this.value)">
+                    <option value="submission" selected>Todos</option>
+                    <option value="Açores">Açores</option>
+                    <option value="Aveiro">Aveiro</option>
+                    <option value="Beja">Beja</option>
+                    <option value="Braga">Braga</option>
+                    <option value="Bragança">Bragança</option>
+                    <option value="Castelo Branco">Castelo Branco</option>
+                    <option value="Coimbra">Coimbra</option>
+                    <option value="Évora">Évora</option>
+                    <option value="Faro">Faro</option>
+                    <option value="Guarda">Guarda</option>
+                    <option value="Leiria">Leiria</option>
+                    <option value="Lisboa">Lisboa</option>
+                    <option value="Madeira">Madeira</option>
+                    <option value="Portalegre">Portalegre</option>
+                    <option value="Porto">Porto</option>
+                    <option value="Santarém">Santarém</option>
+                    <option value="Setúbal">Setúbal</option>
+                    <option value="Viana do Castelo">Viana do Castelo</option>
+                    <option value="Vila Real">Vila Real</option>
+                    <option value="Viseu">Viseu</option>
+                    <option value="otherDistrict">Outros</option>
+                  </select>
+                </th>
+                <th>
+                  <select class="form-select" aria-label="Default select example" id="dateSelect"
+                    style="width: 90px;background-color: #212529;color: white;">
+
+                  </select>
+                </th>
+                <th>
+                  <select class="form-select" id="sortSelect" style="width: 120px;background-color: #212529;color: white;"
+                    onchange="sort(this.value)">
+                    <option value="recente" selected>Recente</option>
+                    <option value="antigo">Mais antigo</option>
+                    <option value="avaliacao">Avaliação</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Titulo</th>
+                <th scope="col">De</th>
+                <th scope="col">Local</th>
+                <th scope="col">Estado</th>
+                <th scope="col" class="desktop">Avaliação</th>
+              </tr>
+            </thead>
+            <tbody class="table-dark" id="tableBody">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- View Modal -->
+  <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="viewModaltitle">Ver submissão</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="title">Titulo</label>
+          <h6 id="title">O Rei em Amarelo</h6>
+          <label for="author">Autor:</label>
+          <h6 id="author">Escola Joaquim Ferreira - Turma 1A</h6>
+          <label for="submission">Submetido por:</label>
+          <h6 id="submission">email@email.com</h6>
+          <label for="local">Local:</label>
+          <h6 id="local">País das maravilhas</h6>
+          <label for="rating">Avaliação:</label>
+          <h6 id="rating">0</h6>
+          <label for="currentFile">Ficheiro</label>
+          <div class="file " id="downloader" style="margin-top: 16px;">
+
+          </div>
+          <label for="currentImage">Imagem</label>
+          <div class="file " id="downloader2" style="margin-top: 16px;">
+
+          </div>
+
+          <span id="illustrator"></span>
+
+
+
+        </div>
+        <div class="modal-footer" id="viewFooter">
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModaltitle">Editar submissão</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="PasswordForm">
+            <label for="InputNewTitle" class="form-label">Titulo</label>
+            <input type="text" class="form-control" id="InputNewTitle" required>
+            <label for="InputNewSubmission" class="form-label">Autor</label>
+            <input type="text" class="form-control" id="InputNewAuthor" required>
+            <label for="InputNewState" class="form-label">Estado</label>
+            <select class="form-select" style="background-color: white;color: black;" id="InputNewState" required>
+              <option value="submitted" selected>Submetido</option>
+              <option value="selected">Selecionado</option>
+            </select>
+            <label for="InputNewIllustrator" class="form-label">Ilustrador</label>
+            <div id="illustratorSelect">
+
+            </div>
+
+
+            <span>Documento:</span>
+            <div class="file-upload">
+              <label for="file-input">
+                <img src="assets/file-refresh.svg" alt="file" id="Editfile" height="148px" class="highlightable">
+              </label>
+              <input id="file-input" type="file"
+                accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                onchange="document.getElementById('Editfile').src = 'assets/file-earmark.svg'" />
+            </div>
+            <span>Imagem:</span>
+            <div class="file-upload">
+              <label for="image-input">
+                <img src="assets/image-refresh.svg" alt="image" id="EditImage" height="148px" class="highlightable">
+              </label>
+              <input id="image-input" type="file" accept="image/*"
+                onchange="document.getElementById('EditImage').src = window.URL.createObjectURL(this.files[0]) " />
+            </div>
+            <p style="color: red;margin-top: 8px;" id="errorMessage" class="d-none">Verifique os campos</p>
+        </div>
+        <div class="modal-footer" id="editFooter">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Bottom navbar-->
+  <nav class="navbar fixed-bottom bg-body-tertiary bottomNav mobile">
+    <div class="container-fluid justify-content-evenly text-center">
+      <a href="adminHome.html" class=" d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+        <img src="assets/house.svg" alt="home" height="32px">
+        <span class="bottom-bar-text ">Inicio</span>
+      </a>
+
+      <a href="adminSubmissions.html" class="active d-flex flex-column align-items-center "
+        style="text-decoration: none; width:30%">
+        <img src="assets/shield.svg" alt="admin" height="32px">
+        <span class="bottom-bar-text current">Administração</span>
+      </a>
+
+      <a href="adminUsers.html" class="d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+        <img src="assets/person.svg" alt="users" height="32px">
+        <span class="bottom-bar-text ">Utilizadores</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="adminSubmissions.js" type="module"></script>
+</body>
+
+</html>

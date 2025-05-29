@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body style="padding-top: 80px; padding-bottom: 50px;" onload="loadEmail()">
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="https://ajudaris.org">
+            <img src="assets/Ajudaris.png" width="52" class="d-inline-block align-top" alt="ajudaris">
+            <span class="school">Home</span>
+        </a>
+    </nav>
+
+    <nav class="navbar navbar-light bg-light fixed-top"
+        style="margin-top: 68px; height: 52px; background-color: #88AA31 !important;">
+        <span class="navbar-brand mb-0 h1 school" style="color: white;">Histórias da ajudaris</span>
+    </nav>
+
+
+
+
+
+    <div class="container" style="margin-left: 0px;margin-right: 0px;">
+        <div class="row">
+            <!-- side navbar-->
+            <div class="col-3 desktop">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light "
+                    style="width: 280px;height: 80vh;  margin-top: 32px; position: fixed;">
+                    <a href="/"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <img src="assets/person.svg" height="40px" alt="user">
+                        <span class="fs-6" id="sidebarEmail">email@email.com</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="illustratorHome.html" class="nav-link link-dark" aria-current="page">
+                                <img src="assets/house.svg" alt="home">
+                                Boas vindas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="illustratorSubmissions.html" class="nav-link link-dark">
+                                <img src="assets/upload.svg" alt="sumbissions">
+                                Submissões
+                            </a>
+                        </li>
+                        <li>
+                            <a href="illustratorSettings.html" class="nav-link active ">
+                                <img src="assets/gear-fill.svg" alt="settings">
+                                Definições
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav nav-pills flex-column mt-auto text-center">
+                        <li class="nav-item" style=" border: solid 2px red;border-radius: 8px;">
+                            <a id="logOut" class="nav-link link-dark" style="background-color: white;">
+                                <span>Terminar sessão</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-2 desktop"></div>
+            
+            <div class="col d-flex flex-column  align-items-center" style="margin-top: 48px; margin-bottom: 60px;">
+                <h3 class="mobile" id="mobileEmail">email@email.com</h3>
+                
+<button type="button" class="btn btn-outline-dark" style="width: 60%; margin-bottom: 80px;" data-bs-toggle="modal" data-bs-target="#passwordModal">Alterar password</button>
+<ul class="nav nav-pills flex-column mt-auto mobile" style="width: 60%;margin-bottom: 60%;">
+    <li class="nav-item text-center" style=" border: solid 2px red;border-radius: 8px;">
+        <a id="logOut2" class="nav-link link-dark" style="background-color: white;">
+            <span>Terminar sessão</span>
+        </a>
+    </li>
+</ul>
+
+<ul class="nav nav-pills flex-column mt-auto " style="width: 60%;">
+    <li class="nav-item text-center" style=" border-radius: 8px;"data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+        <a href="#" class="nav-link link-dark" style="background-color: red;">
+            <span style="color: white;">Eliminar conta</span>
+        </a>
+    </li>
+</ul>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+<!-- Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModaltitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="passwordModaltitle">Alterar Palavra passe</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="PasswordForm">
+            <label for="InputPasswordNew" class="form-label">Introduza a nova Palavra passe</label>
+            <input type="password" class="form-control" id="InputPasswordNew" required>
+            <label for="InputPasswordConfirm" class="form-label">Confirme a Palavra passe</label>
+            <input type="password" class="form-control" id="InputPasswordConfirm" required>
+            <p style="color: red;margin-top: 8px;" id="errorMessage" class="d-none">Verifique os campos</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 40%;">Fechar</button>
+          <button type="button" class="btn btn-primary" style="width: 40%; background-color: #88AA31; border: 0px;" onclick="changePassword()">Alterar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete account confirmation Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModaltitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteAccountModaltitle">Tem a certeza que quer eliminar a sua conta</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Esta alteração é irreversível
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 40%;">Cancelar</button>
+          <button type="submit" class="btn btn-primary" style="width: 40%; background-color: red; border: 0px;" onclick="deleteAccount()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Bottom navbar-->
+    <nav class="navbar fixed-bottom bg-body-tertiary bottomNav mobile">
+        <div class="container-fluid justify-content-evenly text-center">
+            <a href="illustratorHome.html" class="d-flex flex-column align-items-center" style="text-decoration: none;width:30%">
+                <img src="assets/house.svg" alt="home" height="32px">
+                <span class="bottom-bar-text ">Inicio</span>
+            </a>
+
+            <a href="illustratorSubmissions.html" class="d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+                <img src="assets/upload.svg" alt="submissions" height="32px">
+                <span class="bottom-bar-text">Submissões</span>
+            </a>
+
+            <a href="illustratorSettings.html" class="active d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+                <img src="assets/gear-fill.svg" alt="settings" height="32px">
+                <span class="bottom-bar-text current">Definições</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <script src="illustratorSettings.js" type="module"></script>
+</body>
+
+</html>

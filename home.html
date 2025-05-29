@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body style="padding-top: 80px; padding-bottom: 50px;" onload="getMessage()">
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="https://ajudaris.org">
+            <img src="assets/Ajudaris.png" width="52" class="d-inline-block align-top" alt="ajudaris">
+            <span class="school">Home</span>
+        </a>
+    </nav>
+
+    <nav class="navbar navbar-light bg-light fixed-top"
+        style="margin-top: 68px; height: 52px; background-color: #88AA31 !important;">
+        <span class="navbar-brand mb-0 h1 school" style="color: white;">Histórias da ajudaris</span>
+    </nav>
+
+
+
+
+
+    <div class="container" style="margin-left: 0px;margin-right: 0px;">
+        <div class="row">
+            <!-- side navbar-->
+            <div class="col-3 desktop">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light "
+                    style="width: 280px;height: 80vh;  margin-top: 32px; position: fixed;">
+                    <a href="/"
+                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <img src="assets/person.svg" height="40px" alt="user">
+                        <span class="fs-6" id="sidebarEmail"></span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="home.html" class="nav-link  active" aria-current="page">
+                                <img src="assets/house.svg" alt="home">
+                                Boas vindas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="submissions.html" class="nav-link link-dark">
+                                <img src="assets/upload.svg" alt="sumbissions">
+                                Submissões
+                            </a>
+                        </li>
+                        <li>
+                            <a href="settings.html" class="nav-link link-dark">
+                                <img src="assets/gear-fill.svg" alt="settings">
+                                Definições
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav nav-pills flex-column mt-auto text-center">
+                        <li class="nav-item" style=" border: solid 2px red;border-radius: 8px;">
+                            <a id="logOut" class="nav-link link-dark" style="background-color: white;">
+                                <span>Terminar sessão</span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+            
+            <div class="col-2 desktop"></div>
+            <div class="col d-flex flex-column  align-items-center text-center" style="margin-top: 48px; margin-bottom: 60px;">
+                <div style="margin-bottom: 32px;">
+                    <h2 class="school">Bem vindo!</h1>
+                        <img src="assets/Ajudaris.png" alt="Ajudaris" width="168px" style="margin-bottom: 20px;">
+                        <div id="message">
+                        </div>
+                        <p id="submissionDate"></p>
+                </div>
+
+                <a target="_blank" href="https://drive.google.com/file/d/11yJRTC1ybLvJ_WN6XdNrPk7d3_NqOc39/view?usp=sharing" style="width: 40%;"><button type="button" class="btn btn-outline-light d-inline-block"
+                    style="background-color: #176131;" >Consultar regulamento</button></a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="changeInfoModal" tabindex="-1" aria-labelledby="changeInfoModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="changeInfoModalTitle">Quer rever a sua informação para a nova edição?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 40%;">Cancelar</button>
+              <button type="submit" class="btn btn-success" style="width: 40%; border: 0px;"
+                onclick="infoChanger()">Atualizar</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Verification Modal -->
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModaltitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="verificationModaltitle">Verificar conta</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="verifyOTP" class="form-label">Código</label>
+          <input type="text" class="form-control" id="verifyOTP">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" style="width: 45%; background-color: #88AA31; border: 0px;" onclick="verifyAccount()" >Submeter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Bottom navbar-->
+    <nav class="navbar fixed-bottom bg-body-tertiary bottomNav mobile">
+        <div class="container-fluid justify-content-evenly text-center">
+            <a href="home.html" class="active d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+                <img src="assets/house.svg" alt="home" height="32px">
+                <span class="bottom-bar-text current">Inicio</span>
+            </a>
+
+            <a href="submissions.html" class="d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+                <img src="assets/upload.svg" alt="submissions" height="32px">
+                <span class="bottom-bar-text">Submissões</span>
+            </a>
+
+            <a href="settings.html" class="d-flex flex-column align-items-center" style="text-decoration: none; width:30%">
+                <img src="assets/gear-fill.svg" alt="settings" height="32px">
+                <span class="bottom-bar-text ">Definições</span>
+            </a>
+        </div>
+    </nav>
+
+
+
+    <script src="home.js" type="module"></script>
+</body>
+
+</html>
