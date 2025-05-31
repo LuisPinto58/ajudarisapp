@@ -89,9 +89,9 @@
           <table class="table">
             <thead class="table-dark">
               <tr>
-                <th>
+                <th style="width: 25%">
                   <select class="form-select" aria-label="Default select example"
-                    style="width: 100px;background-color: #212529;color: white;" id="writtingSelect"
+                    style="background-color: #212529;color: white;" id="writtingSelect"
                     onchange="changeCategory(this.value, document.getElementById('locationSelect').value)">
                     <option value="submission" selected>Todos</option>
                     <option value="submitted">Submetidos</option>
@@ -103,9 +103,9 @@
                     <option value="marked">Marcados</option>
                   </select>
                 </th>
-                <th>
+                <th style="width: 25%">
                   <select class="form-select" aria-label="Default select example"
-                    style="width: 100px;background-color: #212529;color: white;" id="locationSelect"
+                    style="background-color: #212529;color: white;" id="locationSelect"
                     onchange="changeCategory(document.getElementById('writtingSelect').value, this.value); console.log(this.value)">
                     <option value="submission" selected>Todos</option>
                     <option value="Açores">Açores</option>
@@ -131,14 +131,14 @@
                     <option value="otherDistrict">Outros</option>
                   </select>
                 </th>
-                <th>
+                <th style="width: 25%">
                   <select class="form-select" aria-label="Default select example" id="dateSelect"
-                    style="width: 90px;background-color: #212529;color: white;">
+                    style="background-color: #212529;color: white;">
 
                   </select>
                 </th>
-                <th>
-                  <select class="form-select" id="sortSelect" style="width: 120px;background-color: #212529;color: white;"
+                <th  style="width: 25%">
+                  <select class="form-select" id="sortSelect" style="background-color: #212529;color: white;"
                     onchange="sort(this.value)">
                     <option value="recente" selected>Recente</option>
                     <option value="antigo">Mais antigo</option>
