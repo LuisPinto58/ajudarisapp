@@ -11,7 +11,6 @@ function loadSubmissions() {
                 }
     })
         .then((response) => {
-            console.log(response.data)
             if (window.localStorage.getItem("verified") == "true") {
                 document.getElementById("verifyButton").classList.add("d-none")
             }
