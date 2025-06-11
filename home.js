@@ -44,10 +44,11 @@ function getMessage() {
             currentDate = response.data.currentDate
             window.localStorage.setItem("currentDate", response.data.currentDate)
             window.localStorage.setItem("dates", response.data.dates)
+            window.localStorage.setItem("submissionDate", response.data.submissionDate)
 
 
 
-            if (response.data.currentDate != window.localStorage.getItem("currentDate")) {
+            if (currentDate != window.localStorage.getItem("currentDate")) {
                 $('#changeInfoModal').modal('toggle');
                 updateYear()
             }
@@ -55,9 +56,8 @@ function getMessage() {
                 document.getElementById("message").appendChild(document.createElement("p")).innerHTML = paragraph
                 document.getElementById("submissionDate").innerHTML = "ENVIO DA HISTÓRIA (carta, narrativa, poema,...) ATÉ  " + response.data.submissionDate
             });
-            if (response.data.currentDate < new Date().toISOString().split("T")[0]) {
-                document.getElementById("message").innerHTML = "A data de entrega já passou!"
-                document.getElementById("submissionDate").innerHTML = ""
+            if (response.data.submissionDate < new Date().toISOString().split("T")[0]) {
+                alert("A data de entrega já passou!")
             }
         })
         .catch((error) => {

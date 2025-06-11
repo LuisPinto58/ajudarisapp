@@ -1,4 +1,4 @@
-import { tokenController , logOut} from './tokenController.js';
+import { tokenController, logOut } from './tokenController.js';
 
 document.getElementById("logOut").addEventListener("click", () => {
     logOut()
@@ -48,6 +48,11 @@ function loadSubmissions() {
                 document.getElementById("tableBody").innerHTML = "<tr><td colspan='4'>Nenhuma submissão encontrado.</td></tr>";
                 return;
             } else {
+                if (window.localStorage.getItem("submissionDate") < new Date().toISOString().split("T")[0]) {
+                    alert("A data de entrega já passou!")
+                    document.getElementById("addButton").disabled = true
+                }
+
                 response.data.forEach((submission, index) => {
                     let state = submission.state
                     if (submission.state == "submitted") {
@@ -57,12 +62,38 @@ function loadSubmissions() {
                     }
                     const tr = document.createElement("tr")
                     tr.classList.add("highlightable")
-                    tr.innerHTML = `<th scope="row" data-bs-toggle="modal" id="${index}title" data-bs-target="#viewModal"> ${submission.title}</th>
+
+
+
+                    if (window.localStorage.getItem("submissionDate") > new Date().toISOString().split("T")[0] || window.localStorage.getItem("currentDate") == submission.date) {
+                        tr.innerHTML = `<th scope="row" data-bs-toggle="modal" id="${index}title" data-bs-target="#viewModal"> ${submission.title}</th>
                         <th data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}author"> ${submission.author}</td>
                         <td data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}state">${state}</td>
                         <td><button type="button" class="btn btn-outline-light d-inline-block"
                             style="background-color: #176131;" id ="${index}edit" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil" ></i><span class="desktop">Editar</span></button></td>
                         <td class="desktop"><button class="btn btn-danger" type="button" id ="${index}del" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i><span class="desktop">Eliminar</span></button></td>`
+
+
+
+                    } else {
+                        tr.innerHTML = `<th scope="row" data-bs-toggle="modal" id="${index}title" data-bs-target="#viewModal"> ${submission.title}</th>
+                        <th data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}author"> ${submission.author}</td>
+                        <td data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}state">${state}</td>`
+
+
+                        document.getElementById(index + "edit").addEventListener("click", function () {
+                            feedEditModal(submission)
+                        })
+                        document.getElementById(index + "del").addEventListener("click", function () {
+                            if (confirm("Tem certeza que deseja eliminar este utilizador?")) {
+                                axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
+                                    headers: {
+                                        Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                                    }
+                                })
+                            }
+                        })
+                    }
 
                     document.getElementById("tableBody").appendChild(tr)
 
@@ -78,29 +109,16 @@ function loadSubmissions() {
                     document.getElementById(index + "state").addEventListener("click", function () {
                         feedModal(submission)
                     })
-                    document.getElementById(index + "edit").addEventListener("click", function () {
-                        feedEditModal(submission)
-                    })
-                    document.getElementById(index + "del").addEventListener("click", function () {
-                        if (confirm("Tem certeza que deseja eliminar este utilizador?")) {
-                            axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
-                                headers: {
-                                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
-                                }
-                            })
-                        }
-                    })
-
-
                 })
             }
         })
         .catch((error) => {
             if (error.response && error.response.status === 401) {
                 tokenController(loadSubmissions)
-            }else{
-            console.error(error);
-            alert("Erro ao receber dados. Tente novamente mais tarde.")}
+            } else {
+                console.error(error);
+                alert("Erro ao receber dados. Tente novamente mais tarde.")
+            }
         })
 
 }
@@ -116,17 +134,18 @@ document.getElementById("verifyButton").addEventListener("click", function () {
         .catch((error) => {
             if (error.response && error.response.status === 401) {
                 tokenController(loadSubmissions)
-            }else{
-            if (error.response.data == "OTP already sent.") {
-                console.error(error);
-                alert("Código OTP já enviado.")
-                $('#verificationModal').modal('show');
-
             } else {
-                console.error(error);
-                alert("Erro a verificar conta")
+                if (error.response.data == "OTP already sent.") {
+                    console.error(error);
+                    alert("Código OTP já enviado.")
+                    $('#verificationModal').modal('show');
+
+                } else {
+                    console.error(error);
+                    alert("Erro a verificar conta")
+                }
             }
-        }})
+        })
 
 })
 
@@ -146,10 +165,11 @@ function verifyAccount() {
         .catch((error) => {
             if (error.response && error.response.status === 401) {
                 tokenController(verifyAccount)
-            }else{
-            console.error(error);
-            alert("Erro a verificar conta")
-}})
+            } else {
+                console.error(error);
+                alert("Erro a verificar conta")
+            }
+        })
 }
 
 function feedModal(submission) {
@@ -191,37 +211,41 @@ function feedModal(submission) {
     });
 
     document.getElementById("viewFooter").innerHTML = ""
-    const b1 = document.createElement("div")
-    b1.style.width = "24%"
-    b1.innerHTML = `
+
+    if (window.localStorage.getItem("submissionDate") > new Date().toISOString().split("T")[0] || window.localStorage.getItem("currentDate") == submission.date) {
+        const b1 = document.createElement("div")
+        b1.style.width = "24%"
+        b1.innerHTML = `
     <button type="submit" class="btn btn-danger" style="width: 100%; border: 0px;" >Eliminar</button>`
-    b1.addEventListener("click", function () {
+        b1.addEventListener("click", function () {
 
-        if (confirm("Tem certeza que deseja eliminar esta submissão?")) {
+            if (confirm("Tem certeza que deseja eliminar esta submissão?")) {
 
-            axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
-                headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
+                    headers: {
+                        Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    }
                 }
+                ).then(() => {
+                    window.location.reload()
+                })
             }
-            ).then(() => {
-                window.location.reload()
-            })
         }
+        )
+
+        const b2 = document.createElement("div")
+        b2.style.width = "36%"
+        b2.innerHTML = `<button type="button" class="btn btn-primary" style="width:100% ;background-color: #88AA31; border: 0px;" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>`
+        b2.addEventListener("click", function () {
+            feedEditModal(submission)
+        })
+
+
+
+        document.getElementById("viewFooter").appendChild(b1)
+        document.getElementById("viewFooter").appendChild(b2)
     }
-    )
 
-    const b2 = document.createElement("div")
-    b2.style.width = "36%"
-    b2.innerHTML = `<button type="button" class="btn btn-primary" style="width:100% ;background-color: #88AA31; border: 0px;" data-bs-toggle="modal" data-bs-target="#editModal">Editar</button>`
-    b2.addEventListener("click", function () {
-        feedEditModal(submission)
-    })
-
-
-
-    document.getElementById("viewFooter").appendChild(b1)
-    document.getElementById("viewFooter").appendChild(b2)
 
 
 
@@ -257,17 +281,18 @@ function addSubmission() {
                         Authorization: "Bearer " + window.sessionStorage.getItem("token")
                     }
                 })
-                    .then((response) => {
+                    .then(() => {
                         alert("Submissão enviada com sucesso!")
                         window.location.reload()
                     })
                     .catch((error) => {
                         if (error.response && error.response.status === 401) {
                             tokenController(addSubmission)
-                        }else{
-                        console.error(error);
-                        alert("Erro ao enviar submissão. Tente novamente mais tarde.")
-                    }})
+                        } else {
+                            console.error(error);
+                            alert("Erro ao enviar submissão. Tente novamente mais tarde.")
+                        }
+                    })
             })
     }
 }
@@ -343,10 +368,11 @@ function editSubmission(submission, editedSubmission) {
         .catch((error) => {
             if (error.response && error.response.status === 401) {
                 tokenController(editSubmission, submission, editedSubmission)
-            }else{
-            console.error(error);
-            alert("Erro ao enviar submissão. Tente novamente mais tarde.")
-}})
+            } else {
+                console.error(error);
+                alert("Erro ao enviar submissão. Tente novamente mais tarde.")
+            }
+        })
 }
 
 

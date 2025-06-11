@@ -26,6 +26,13 @@
     }
 }
 
+#logOut{
+    cursor: pointer;
+}
+#logOut2{
+    cursor: pointer;
+}
+
 .popup {
     position: relative;
     display: inline-block;

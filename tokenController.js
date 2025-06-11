@@ -5,7 +5,7 @@ export function tokenController(callback,...params) {
                     console.log("Token refreshed successfully");
                     console.log(response.data);
                     window.sessionStorage.setItem("token", response.data.accessToken);
-                    window.sessionStorage.setItem("refreshToken", response.data.refreshToken);
+                    window.sessionStorage.setItem("refreshToken", response.data.newRefreshToken);
                     if (typeof callback === "function") {
                         callback(...params); 
                     }

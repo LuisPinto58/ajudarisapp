@@ -1,7 +1,6 @@
 let role = "institution"
 
 function changeForm(x, direction) {
-
     if (document.getElementById("AccountType").value == "institution") {
         role = document.getElementById("AccountType").value
         
@@ -294,7 +293,7 @@ function registerUser() {
     })
     .catch((error) => {
         console.error(error);
-        alert("Erro ao criar conta. Tente novamente mais tarde.")
+        alert("Erro ao criar conta. Verifique as datas de inscrição ou tente novamente mais tarde.")
     })
 
 }

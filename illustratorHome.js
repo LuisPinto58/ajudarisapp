@@ -46,6 +46,7 @@ function getMessage() {
             currentDate = response.data.currentDate
             window.localStorage.setItem("currentDate", response.data.currentDate)
             window.localStorage.setItem("dates", response.data.dates)
+            window.localStorage.setItem("submissionDate", response.data.submissionDate)
 
 
 
