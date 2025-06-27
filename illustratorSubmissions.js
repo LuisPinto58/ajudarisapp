@@ -12,9 +12,6 @@ function loadSubmissions() {
     })
         .then((response) => {
             console.log(response.data)
-            if (window.localStorage.getItem("verified") == "true") {
-                document.getElementById("verifyButton").classList.add("d-none")
-            }
             document.getElementById("sidebarEmail").innerHTML = window.localStorage.getItem("email")
 
             const dates = window.localStorage.getItem("dates").split(",")
@@ -93,6 +90,7 @@ function loadSubmissions() {
                     document.getElementById(index + "state").addEventListener("click", function () {
                         feedModal(submission)
                     })
+                    
 
 
                 })
@@ -308,7 +306,7 @@ function submissionVerifier(submission, request) {
 }
 
 function editSubmission(submission, editedSubmission) {
-    axios.put("https://ajudaris-api.onrender.com/submissions/illustrations/" + submission._id, editedSubmission, {
+    axios.put("https://ajudaris-api.onrender.com/submissions/illustrations/" + submission._id, editedSubmission,  {
         headers: {
             Authorization: "Bearer " + window.sessionStorage.getItem("token")
         }
@@ -328,27 +326,6 @@ function editSubmission(submission, editedSubmission) {
         })
 }
 
-document.getElementById("verifyButton").addEventListener("click", function () {
-    axios.post("https://ajudaris-api.onrender.com/users/send-otp", { email: window.localStorage.getItem("email"), use: "verification" })
-        .then((response) => {
-            console.log(response)
-            alert("Verifique a sua caixa de endereço eletrónico para verificar a sua conta (certifique-se que o email não está na caixa de spam)")
-            $('#verificationModal').modal('show');
-
-        })
-        .catch((error) => {
-            if (error.response.data == "OTP already sent.") {
-                console.error(error);
-                alert("Erro:Código OTP já enviado.")
-                $('#verificationModal').modal('show');
-
-            } else {
-                console.error(error);
-                alert("Erro a verificar conta")
-            }
-        })
-
-})
 
 window.loadSubmissions = loadSubmissions;
 window.editSubmission = editSubmission;

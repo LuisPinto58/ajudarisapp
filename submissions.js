@@ -109,6 +109,9 @@ function loadSubmissions() {
                     document.getElementById(index + "state").addEventListener("click", function () {
                         feedModal(submission)
                     })
+                    document.getElementById(index + "edit").addEventListener("click", function () {
+                            feedEditModal(submission)
+                        })
                 })
             }
         })
@@ -377,6 +380,7 @@ function editSubmission(submission, editedSubmission) {
 
 
 window.loadSubmissions = loadSubmissions
+window.editSubmission = editSubmission
 window.addSubmission = addSubmission;
 window.verifyAccount = verifyAccount;
 

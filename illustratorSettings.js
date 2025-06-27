@@ -64,6 +64,5 @@ function deleteAccount() {
 
 
 window.loadEmail = loadEmail
-window.getMessage = getMessage;
 window.changePassword = changePassword;
 window.deleteAccount = deleteAccount;
