@@ -29,7 +29,7 @@ if (window.localStorage.getItem("user") != null) {
         urlExtension = window.localStorage.getItem("user")
         year = ""
     } else if (window.localStorage.getItem("userRole") == "illustrator") {
-        urlExtension = "illustrations/" + window.localStorage.getItem("user")
+        urlExtension = "illustrators/" + window.localStorage.getItem("user")
         year = ""
     }
 }

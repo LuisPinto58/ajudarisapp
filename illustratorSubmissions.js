@@ -5,7 +5,7 @@ document.getElementById("logOut").addEventListener("click", () => {
 })
 
 function loadSubmissions() {
-    axios.get("https://ajudaris-api.onrender.com/submissions/illustrations/" + window.localStorage.getItem("id"), {
+    axios.get("https://ajudaris-api.onrender.com/submissions/illustrators/" + window.localStorage.getItem("id"), {
         headers: {
             Authorization: "Bearer " + window.sessionStorage.getItem("token")
         }
@@ -350,28 +350,5 @@ document.getElementById("verifyButton").addEventListener("click", function () {
 
 })
 
-function verifyAccount() {
-    axios.put("https://ajudaris-api.onrender.com/users/email-verification", { email: window.localStorage.getItem("email"), otp: document.getElementById("verifyOTP").value }, {
-        headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
-        }
-    })
-        .then((response) => {
-            console.log(response)
-            alert("Conta verificada com sucesso!")
-            window.localStorage.setItem("verified", "true")
-            document.getElementById("addButton").disabled = false
-            document.getElementById("verifyButton").classList.add("d-none")
-        })
-        .catch((error) => {
-            if (error.response && error.response.status === 401) {
-                tokenController(verifyAccount)
-            }
-            console.error(error);
-            alert("Erro a verificar conta")
-        })
-}
-
 window.loadSubmissions = loadSubmissions;
 window.editSubmission = editSubmission;
-window.verifyAccount = verifyAccount;

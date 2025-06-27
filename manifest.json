@@ -1,0 +1,11 @@
+{
+    "theme_color":"#88AA31",
+    "background_color":"#ffffff",
+    "icons":[{"purpose":"maskable","sizes":"512x512","src":"assets/icon512_maskable.png","type":"image/png"},{"purpose":"any","sizes":"512x512","src":"assets/icon512_rounded.png","type":"image/png"}],
+    "orientation":"any",
+    "display":"standalone",
+    "dir":"auto",
+    "lang":"pt-pt",
+    "name":"Histórias da Ajudaris",
+    "short_name":"Historias Ajudaris"
+}

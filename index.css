@@ -111,3 +111,10 @@
 .highlightable:hover{
     border: solid 4px #88AA31;
 }
+
+
+#userLog {
+    position: absolute;
+    top: 45%;
+    left: 25%;
+}
