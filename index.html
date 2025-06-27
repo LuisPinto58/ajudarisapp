@@ -32,7 +32,7 @@
     </nav>
 
   <form style="margin: 10%; justify-items: center;" id="LogInForm">
-    <img src="assets/Ajudaris.png" alt="Ajudaris" width="168px" style="margin-top: 32px;">
+    <img src="assets/Ajudaris.png" alt="Ajudaris" width="168px" style="margin-top:80px;" class="d-block mx-auto">
     <div>
       <label for="InputEmail" class="form-label">Endereço eletrónico</label>
       <input type="email" class="form-control" id="InputEmail" required
@@ -47,11 +47,15 @@
       <br>
       <p style="color: red;" id="errorMessage" class="d-none">Palavra passe ou email errado</p>
     </div>
-    <button type="button" class="btn btn-outline-light" style="width: 100%;background-color: #88AA31"
-      onclick="logIn()">Entrar</button>
-    <a href="signUp.html"><button type="button" class="btn btn-outline-light"
-        style="width: 100%;background-color: #176131;margin-top: 32px;">Inscrever</button></a>
-  </form>
+    <div class="d-flex flex-column align-items-center">
+  <button type="button" class="btn btn-outline-light btn-lg px-4 py-2 mb-3"
+    style="background-color: #88AA31; min-width: 160px; max-width: 240px;" onclick="logIn()">Entrar</button>
+  <a href="signUp.html" class="w-100 d-flex justify-content-center text-decoration-none">
+    <button type="button" class="btn btn-outline-light btn-lg px-4 py-2"
+      style="background-color: #176131; min-width: 160px; max-width: 240px; margin-top: 16px;">Inscrever</button>
+  </a>
+</div>
+</form>
 
   <!--password reset modal-->
   <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
