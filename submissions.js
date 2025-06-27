@@ -7,7 +7,7 @@ document.getElementById("logOut").addEventListener("click", () => {
 function loadSubmissions() {
     axios.get("https://ajudaris-api.onrender.com/submissions/" + window.localStorage.getItem("id"), {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
         .then((response) => {
@@ -88,7 +88,7 @@ function loadSubmissions() {
                             if (confirm("Tem certeza que deseja eliminar este utilizador?")) {
                                 axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
                                     headers: {
-                                        Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                                        Authorization: "Bearer " + window.localStorage.getItem("token")
                                     }
                                 })
                             }
@@ -155,7 +155,7 @@ document.getElementById("verifyButton").addEventListener("click", function () {
 function verifyAccount() {
     axios.put("https://ajudaris-api.onrender.com/users/email-verification", { email: window.localStorage.getItem("email"), otp: document.getElementById("verifyOTP").value }, {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
         .then((response) => {
@@ -184,7 +184,7 @@ function feedModal(submission) {
     document.getElementById("currentFile").addEventListener("click", function () {
         axios.get("https://ajudaris-api.onrender.com/submissions/documents/" + submission._id, {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                Authorization: "Bearer " + window.localStorage.getItem("token")
             }
         })
             .then((response) => {
@@ -226,7 +226,7 @@ function feedModal(submission) {
 
                 axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
                     headers: {
-                        Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                        Authorization: "Bearer " + window.localStorage.getItem("token")
                     }
                 }
                 ).then(() => {
@@ -281,7 +281,7 @@ function addSubmission() {
                 }
                 axios.post("https://ajudaris-api.onrender.com/submissions", submission, {
                     headers: {
-                        Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                        Authorization: "Bearer " + window.localStorage.getItem("token")
                     }
                 })
                     .then(() => {
@@ -314,7 +314,7 @@ function feedEditModal(submission) {
 
             axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
                 headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
             }
             ).then(() => {
@@ -361,7 +361,7 @@ function submissionVerifier(submission) {
 function editSubmission(submission, editedSubmission) {
     axios.put("https://ajudaris-api.onrender.com/submissions/institutions/" + submission._id, editedSubmission, {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
         .then((response) => {

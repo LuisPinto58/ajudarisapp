@@ -11,7 +11,7 @@ document.getElementById("logOut2").addEventListener("click", () => {
 function loadUsers () {
     axios.get("https://ajudaris-api.onrender.com/users/",{
         headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
     })
     .then((response) => {
@@ -44,7 +44,7 @@ function loadUsers () {
                     if(confirm("Tem certeza que deseja eliminar este utilizador?")) {
                         axios.delete("https://ajudaris-api.onrender.com/users/" + user.email,{
                             headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
                     }).then(()=>window.location.reload())
                 }
@@ -127,7 +127,7 @@ function feedModal(user) {
             }else{
             axios.delete("https://ajudaris-api.onrender.com/users/" + user.email,{
                 headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
             }
             ).then(()=>window.location.reload())
@@ -179,7 +179,7 @@ function changePassword() {
             password: document.getElementById("InputPasswordNew").value
         }, {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                Authorization: "Bearer " + window.localStorage.getItem("token")
             }
         })
             .then((response) => {

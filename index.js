@@ -14,8 +14,8 @@ function logIn(){
 
     axios.post("https://ajudaris-api.onrender.com/users/login",data)
     .then((response) => {
-        window.sessionStorage.setItem("token", response.data.accessToken)
-        window.sessionStorage.setItem("refreshToken", response.data.refreshToken)
+        window.localStorage.setItem("token", response.data.accessToken)
+        window.localStorage.setItem("refreshToken", response.data.refreshToken)
         window.localStorage.setItem("email", document.getElementById("InputEmail").value)
         window.localStorage.setItem("role", response.data.user.role)
         window.localStorage.setItem("currentDate", response.data.user.currentDate)

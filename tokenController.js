@@ -1,11 +1,11 @@
 
 export function tokenController(callback,...params) {
-    axios.post("https://ajudaris-api.onrender.com/users/auth/refresh",{refreshToken: window.sessionStorage.getItem("refreshToken"), email: window.localStorage.getItem("email")})
+    axios.post("https://ajudaris-api.onrender.com/users/auth/refresh",{refreshToken: window.localStorage.getItem("refreshToken"), email: window.localStorage.getItem("email")})
     .then((response)=>{
                     console.log("Token refreshed successfully");
                     console.log(response.data);
-                    window.sessionStorage.setItem("token", response.data.accessToken);
-                    window.sessionStorage.setItem("refreshToken", response.data.newRefreshToken);
+                    window.localStorage.setItem("token", response.data.accessToken);
+                    window.localStorage.setItem("refreshToken", response.data.newRefreshToken);
                     if (typeof callback === "function") {
                         callback(...params); 
                     }
@@ -19,6 +19,5 @@ export function tokenController(callback,...params) {
 
 export function logOut(){
                     window.localStorage.clear();
-                    window.sessionStorage.clear();
                     window.location.href = "index.html";
                 }

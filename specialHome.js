@@ -8,7 +8,7 @@ let currentDate
 function getMessage() {
     axios.get("https://ajudaris-api.onrender.com/ajudaris", {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
     .then((response) => {
@@ -49,7 +49,7 @@ function updateYear() {
         date: currentDate
     }, {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
     .then((response) => {

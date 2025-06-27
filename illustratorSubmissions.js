@@ -7,7 +7,7 @@ document.getElementById("logOut").addEventListener("click", () => {
 function loadSubmissions() {
     axios.get("https://ajudaris-api.onrender.com/submissions/illustrators/" + window.localStorage.getItem("id"), {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
         .then((response) => {
@@ -117,7 +117,7 @@ function feedModal(submission) {
         let sub = submission
         axios.get("https://ajudaris-api.onrender.com/submissions/documents/" + submission._id, {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                Authorization: "Bearer " + window.localStorage.getItem("token")
             }
         })
             .then((response) => {
@@ -213,7 +213,7 @@ function decodeImage(submission) {
     return axios
         .get("https://ajudaris-api.onrender.com/submissions/images/" + submission._id, {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token"),
+                Authorization: "Bearer " + window.localStorage.getItem("token"),
             },
         })
         .then((response) => {
@@ -308,7 +308,7 @@ function submissionVerifier(submission, request) {
 function editSubmission(submission, editedSubmission) {
     axios.put("https://ajudaris-api.onrender.com/submissions/illustrations/" + submission._id, editedSubmission,  {
         headers: {
-            Authorization: "Bearer " + window.sessionStorage.getItem("token")
+            Authorization: "Bearer " + window.localStorage.getItem("token")
         }
     })
         .then((response) => {

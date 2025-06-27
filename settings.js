@@ -19,7 +19,7 @@ function changePassword() {
             password: document.getElementById("InputPasswordNew").value
         }, {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                Authorization: "Bearer " + window.localStorage.getItem("token")
             }
         })
             .then((response) => {
@@ -42,15 +42,12 @@ function deleteAccount() {
     if (confirm("Ao eliminar a sua conta, os dados que submeteu também serão eliminados. Confirmar?")) {
         axios.delete("https://ajudaris-api.onrender.com/users/" + window.localStorage.getItem("email"), {
             headers: {
-                Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                Authorization: "Bearer " + window.localStorage.getItem("token")
             }
         })
             .then((response) => {
                 alert("Conta eliminada com sucesso")
-                window.sessionStorage.removeItem("token")
-                window.sessionStorage.removeItem("refreshToken")
-                window.localStorage.removeItem("email")
-                window.localStorage.removeItem("user")
+                window.localStorage.clear()
                 window.location.href = "/"
             })
             .catch((error) => {

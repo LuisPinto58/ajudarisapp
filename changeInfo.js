@@ -18,7 +18,7 @@ function loadUser () {
 
     axios.get("https://ajudaris-api.onrender.com/users/" + email,{
         headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
     })
     .then((response) => {
@@ -215,7 +215,7 @@ function editUser() {
     }
     axios.put("https://ajudaris-api.onrender.com/users/" + email, data,{
         headers: {
-                    Authorization: "Bearer " + window.sessionStorage.getItem("token")
+                    Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
     })
     .then((response) => {
