@@ -71,7 +71,7 @@ function loadSubmissions() {
                         <td data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}state">${state}</td>
                         <td><button type="button" class="btn btn-outline-light d-inline-block"
                             style="background-color: #176131;" id ="${index}edit" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil" ></i><span class="desktop">Editar</span></button></td>
-                        <td class="desktop"><button class="btn btn-danger" type="button" id ="${index}del" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i><span class="desktop">Eliminar</span></button></td>`
+                        <td class="desktop"><button class="btn btn-danger" type="button" id ="${index}del" ><i class="bi bi-trash"></i><span class="desktop">Eliminar</span></button></td>`
 
 
 
@@ -81,18 +81,7 @@ function loadSubmissions() {
                         <td data-bs-toggle="modal" data-bs-target="#viewModal" id="${index}state">${state}</td>`
 
 
-                        document.getElementById(index + "edit").addEventListener("click", function () {
-                            feedEditModal(submission)
-                        })
-                        document.getElementById(index + "del").addEventListener("click", function () {
-                            if (confirm("Tem certeza que deseja eliminar este utilizador?")) {
-                                axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
-                                    headers: {
-                                        Authorization: "Bearer " + window.localStorage.getItem("token")
-                                    }
-                                })
-                            }
-                        })
+                        
                     }
 
                     document.getElementById("tableBody").appendChild(tr)
@@ -110,7 +99,24 @@ function loadSubmissions() {
                         feedModal(submission)
                     })
                     document.getElementById(index + "edit").addEventListener("click", function () {
-                            feedEditModal(submission)
+                        feedEditModal(submission)
+                    })
+                    document.getElementById(index + "del").addEventListener("click", function () {
+                            if (confirm("Tem certeza que deseja eliminar esta submissão?")) {
+
+                                axios.delete("https://ajudaris-api.onrender.com/submissions/institutions/" + submission._id, {
+                                    headers: {
+                                        Authorization: "Bearer " + window.localStorage.getItem("token")
+                                    }
+                                }
+                                ).then(() => {
+                                    window.location.reload()
+                                })
+                                    .catch((error) => {
+                                        console.error(error);
+                                        alert("Erro ao eliminar submissão. Tente novamente mais tarde.")
+                                    })
+                            }
                         })
                 })
             }
@@ -224,7 +230,7 @@ function feedModal(submission) {
 
             if (confirm("Tem certeza que deseja eliminar esta submissão?")) {
 
-                axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
+                axios.delete("https://ajudaris-api.onrender.com/submissions/institutions/" + submission._id, {
                     headers: {
                         Authorization: "Bearer " + window.localStorage.getItem("token")
                     }
@@ -232,6 +238,10 @@ function feedModal(submission) {
                 ).then(() => {
                     window.location.reload()
                 })
+                    .catch((error) => {
+                        console.error(error);
+                        alert("Erro ao eliminar submissão. Tente novamente mais tarde.")
+                    })
             }
         }
         )
@@ -312,7 +322,7 @@ function feedEditModal(submission) {
 
         if (confirm("Tem certeza que deseja eliminar esta submissão?")) {
 
-            axios.delete("https://ajudaris-api.onrender.com/submissions/" + submission._id, {
+            axios.delete("https://ajudaris-api.onrender.com/submissions/institutions/" + submission._id, {
                 headers: {
                     Authorization: "Bearer " + window.localStorage.getItem("token")
                 }
@@ -320,6 +330,10 @@ function feedEditModal(submission) {
             ).then(() => {
                 window.location.reload()
             })
+                .catch((error) => {
+                    console.error(error);
+                    alert("Erro ao eliminar submissão. Tente novamente mais tarde.")
+                })
         }
     }
     )
@@ -367,6 +381,7 @@ function editSubmission(submission, editedSubmission) {
         .then((response) => {
             console.log(response.data)
             alert("Submissão alterada com sucesso!")
+            window.location.reload()
         })
         .catch((error) => {
             if (error.response && error.response.status === 401) {

@@ -226,10 +226,10 @@ function loadSubmissions(year) {
 
                         tr.classList.add(submission.date)
                         if (districts.includes(submission.submitter.district)) {
-                                tr.classList.add(submission.submitter.district)
-                            } else{
-                                tr.classList.add("otherDistrict")
-                            }
+                            tr.classList.add(submission.submitter.district)
+                        } else {
+                            tr.classList.add("otherDistrict")
+                        }
                         tr.classList.add("submission")
                         tr.setAttribute("id", "submission" + submission._id)
                         tr.classList.add(submission.state)
@@ -406,7 +406,7 @@ function feedModal(submission) {
     document.getElementById("title").innerHTML = submission.title
     document.getElementById("author").innerHTML = submission.author
     document.getElementById("local").innerHTML = submission.submitter.district + "(" + submission.submitter.city + ")"
-    document.getElementById("createdAt").innerHTML = submission.createdAt
+    document.getElementById("createdAt").innerHTML = submission.createdAt.replace("T", " ").replace("Z", "")
     document.getElementById("submission").innerHTML = submission.submitter.email
     document.getElementById("downloader").innerHTML = `
     <img src="assets/file-earmark.svg" alt="file image" id="currentFile" height="148px" class= 'highlightable'>`
@@ -803,14 +803,22 @@ function sort(type) {
         rows.sort((a, b) => {
             const indexA = parseInt(a.classList[0]);
             const indexB = parseInt(b.classList[0]);
-            return indexB - indexA;
+            if (role == "designer") {
+                    return indexB - indexA;
+            } else {
+                return indexA - indexB;
+            }
         });
     } else if (type === "antigo") {
         // Sort by oldest year (ascending)
         rows.sort((a, b) => {
             const indexA = parseInt(a.classList[0]);
             const indexB = parseInt(b.classList[0]);
-            return indexA - indexB;
+            if (role == "designer") {
+                    return indexA - indexB;
+            } else {
+            return indexB - indexA;
+            }
         });
     } else if (type === "avaliacao") {
         // Sort by rating descending
@@ -820,7 +828,7 @@ function sort(type) {
                 const ratingB = parseFloat(b.children[4].children[0].value) || 0;
                 return ratingB - ratingA;
             })
-        }else {
+        } else {
             rows.sort((a, b) => {
                 console.log(a.children[4].textContent)
                 const ratingA = parseFloat(a.children[4].textContent) || 0;

@@ -342,7 +342,7 @@ function feedModal(submission) {
     document.getElementById("author").innerHTML = submission.author
     document.getElementById("local").innerHTML = submission.submitter.district + "(" + submission.submitter.city + ")"
     document.getElementById("submission").innerHTML = submission.submitter.email
-    document.getElementById("createdAt").innerHTML = submission.createdAt
+    document.getElementById("createdAt").innerHTML = submission.createdAt.replace("T", " ").replace("Z", "")
     document.getElementById("rating").innerHTML = submission.rating
     document.getElementById("downloader").innerHTML = `
             <img src="assets/file-earmark.svg" alt="file image" id="currentFile" height="148px" class="highlightable">`
@@ -690,14 +690,14 @@ function sort(type) {
         rows.sort((a, b) => {
             const indexA = parseInt(a.classList[0]);
             const indexB = parseInt(b.classList[0]);
-            return indexB - indexA;
+            return indexA - indexB;
         });
     } else if (type === "antigo") {
         // Sort by oldest year (ascending)
         rows.sort((a, b) => {
             const indexA = parseInt(a.classList[0]);
             const indexB = parseInt(b.classList[0]);
-            return indexA - indexB;
+            return indexB - indexA;
         });
     } else if (type === "avaliacao") {
         // Sort by rating descending
