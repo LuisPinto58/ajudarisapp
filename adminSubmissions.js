@@ -342,6 +342,7 @@ function feedModal(submission) {
     document.getElementById("author").innerHTML = submission.author
     document.getElementById("local").innerHTML = submission.submitter.district + "(" + submission.submitter.city + ")"
     document.getElementById("submission").innerHTML = submission.submitter.email
+    document.getElementById("createdAt").innerHTML = submission.createdAt
     document.getElementById("rating").innerHTML = submission.rating
     document.getElementById("downloader").innerHTML = `
             <img src="assets/file-earmark.svg" alt="file image" id="currentFile" height="148px" class="highlightable">`
